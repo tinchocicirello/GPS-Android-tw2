@@ -1,4 +1,4 @@
-package com.expocodetech.android.mylocation;
+package com.tallerweb2.android.GPS;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

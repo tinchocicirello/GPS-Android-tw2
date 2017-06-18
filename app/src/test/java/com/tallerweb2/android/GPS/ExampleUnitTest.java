@@ -1,4 +1,4 @@
-package com.expocodetech.android.mylocation;
+package com.tallerweb2.android.GPS;
 
 import org.junit.Test;
 
