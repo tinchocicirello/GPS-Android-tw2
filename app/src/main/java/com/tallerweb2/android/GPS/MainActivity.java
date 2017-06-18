@@ -2,6 +2,8 @@ package com.tallerweb2.android.GPS;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +22,10 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
                    GoogleApiClient.OnConnectionFailedListener,
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     private TextView mTvLatitud;
     private TextView mTvLongitud;
+    private TextView mTvDireccion;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -45,8 +52,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //Conectar el UI con la Actividad
-        mTvLatitud = (TextView) findViewById(R.id.latitud);
+        mTvLatitud= (TextView) findViewById(R.id.latitud);
         mTvLongitud= (TextView) findViewById(R.id.longitud);
+        mTvDireccion= (TextView) findViewById(R.id.direccion);
 
         //Solicitar permisos si es necesario (Android 6.0+)
         requestPermissionIfNeedIt();
@@ -132,6 +140,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void setLocation(Location loc) {
+        //Obtener la direcci—n de la calle a partir de la latitud y la longitud
+        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
+            try {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
+                if (!list.isEmpty()) {
+                    Address address = list.get(0);
+                    mTvDireccion.setText("Mi direccion es: \n" + address.getAddressLine(0));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -177,6 +201,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
+        String Text = "Mi ubicacion actual es: " + "\n Lat = "
+                + location.getLatitude() + "\n Long = " + location.getLongitude();
+        mTvDireccion.setText(Text);
+        this.setLocation(location);
         refreshUI();
     }
 
