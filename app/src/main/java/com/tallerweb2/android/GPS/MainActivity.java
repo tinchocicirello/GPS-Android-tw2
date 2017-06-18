@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshUI(){
         if (mCurrentLocation != null) {
-            mTvLatitud.setText(String.valueOf(mCurrentLocation.getLatitude()));
-            mTvLongitud.setText(String.valueOf(mCurrentLocation.getLongitude()));
+            mTvLatitud.setText(String.valueOf("Latitud: "+mCurrentLocation.getLatitude()));
+            mTvLongitud.setText(String.valueOf("Longitud: "+mCurrentLocation.getLongitude()));
         }
     }
 
