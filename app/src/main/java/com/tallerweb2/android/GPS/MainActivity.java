@@ -36,9 +36,10 @@ public class MainActivity extends AppCompatActivity
                    LocationListener, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
-    private TextView mTvLatitud;
-    private TextView mTvLongitud;
+//    private TextView mTvLatitud;
+//    private TextView mTvLongitud;
     private TextView mTvDireccion;
+    private String localidad;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -81,21 +82,21 @@ public class MainActivity extends AppCompatActivity
             case  R.id.button1: {
 
                 Intent i = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://google.com/"));
+                        Uri.parse("http://clarin.com/buscador/?q="+localidad));
                 startActivity(i);
                 break;
             }
 
             case R.id.button2: {
                 Intent i = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://google.com/"));
+                        Uri.parse("http://buscar.lanacion.com.ar/"+localidad));
                 startActivity(i);
                 break;
             }
 
             case  R.id.button3: {
                 Intent i = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://google.com/"));
+                        Uri.parse("http://infobae.com/search/"+localidad));
                 startActivity(i);
                 break;
             }
@@ -176,8 +177,8 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshUI(){
         if (mCurrentLocation != null) {
-            mTvLatitud.setText(String.valueOf("Latitud: "+mCurrentLocation.getLatitude()));
-            mTvLongitud.setText(String.valueOf("Longitud: "+mCurrentLocation.getLongitude()));
+//            mTvLatitud.setText(String.valueOf("Latitud: "+mCurrentLocation.getLatitude()));
+//            mTvLongitud.setText(String.valueOf("Longitud: "+mCurrentLocation.getLongitude()));
         }
     }
 
@@ -190,6 +191,7 @@ public class MainActivity extends AppCompatActivity
                 if (!list.isEmpty()) {
                     Address address = list.get(0);
                     mTvDireccion.setText("Mi direccion es: \n" + address.getAddressLine(0));
+                    localidad = address.getLocality();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
