@@ -1,10 +1,12 @@
 package com.tallerweb2.android.GPS;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +33,12 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
                    GoogleApiClient.OnConnectionFailedListener,
-                   LocationListener {
+                   LocationListener, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
     private TextView mTvLatitud;
     private TextView mTvLongitud;
     private TextView mTvDireccion;
-    private Button mClickButton1;
-    private Button mClickButton2;
-    private Button mClickButton3;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //Conectar el UI con la Actividad
-        mTvLatitud= (TextView) findViewById(R.id.latitud);
-        mTvLongitud= (TextView) findViewById(R.id.longitud);
         mTvDireccion= (TextView) findViewById(R.id.direccion);
 
         //Solicitar permisos si es necesario (Android 6.0+)
@@ -67,20 +65,20 @@ public class MainActivity extends AppCompatActivity
         initGoogleAPIClient();
 
         //creamos las instancias de botones para realizar los intents
-        Button boton1 = (Button)findViewById(R.id.Button1);
-        mClickButton1.setOnClickListener(this);
+        Button boton1 = (Button)findViewById(R.id.button1);
+        boton1.setOnClickListener(this);
 
-        Button boton2 = (Button)findViewById(R.id.Button2);
-        mClickButton2.setOnClickListener(this);
+        Button boton2 = (Button)findViewById(R.id.button2);
+        boton2.setOnClickListener(this);
 
-        Button boton3 = (Button)findViewById(R.id.Button3);
-        mClickButton3.setOnClickListener(this);
+        Button boton3 = (Button)findViewById(R.id.button3);
+        boton3.setOnClickListener(this);
     }
 
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case  R.id.Button1: {
+            case  R.id.button1: {
 
                 Intent i = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://google.com/"));
@@ -88,13 +86,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
 
-            case R.id.Button2: {
-                // do something for button 2 click
+            case R.id.button2: {
+                Intent i = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://google.com/"));
+                startActivity(i);
                 break;
             }
 
-            case  R.id.Button3: {
-                // do something for button 1 click
+            case  R.id.button3: {
+                Intent i = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://google.com/"));
+                startActivity(i);
                 break;
             }
         }
