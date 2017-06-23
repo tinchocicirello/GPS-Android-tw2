@@ -190,8 +190,9 @@ public class MainActivity extends AppCompatActivity
                 List<Address> list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
                 if (!list.isEmpty()) {
                     Address address = list.get(0);
-                    mTvDireccion.setText("Mi direccion es: \n" + address.getAddressLine(0));
                     localidad = address.getLocality();
+                    mTvDireccion.setText(localidad);
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
