@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity
     private TextView mTvLatitud;
     private TextView mTvLongitud;
     private TextView mTvDireccion;
+    private Button mClickButton1;
+    private Button mClickButton2;
+    private Button mClickButton3;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -61,6 +65,39 @@ public class MainActivity extends AppCompatActivity
 
         //Inicializar el GoogleAPIClient y armar la Petición de Ubicación
         initGoogleAPIClient();
+
+        //creamos las instancias de botones para realizar los intents
+        Button boton1 = (Button)findViewById(R.id.Button1);
+        mClickButton1.setOnClickListener(this);
+
+        Button boton2 = (Button)findViewById(R.id.Button2);
+        mClickButton2.setOnClickListener(this);
+
+        Button boton3 = (Button)findViewById(R.id.Button3);
+        mClickButton3.setOnClickListener(this);
+    }
+
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case  R.id.Button1: {
+
+                Intent i = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://google.com/"));
+                startActivity(i);
+                break;
+            }
+
+            case R.id.Button2: {
+                // do something for button 2 click
+                break;
+            }
+
+            case  R.id.Button3: {
+                // do something for button 1 click
+                break;
+            }
+        }
     }
 
     @Override
@@ -84,6 +121,8 @@ public class MainActivity extends AppCompatActivity
         super.onStop();
         stopLocationUpdates();
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -141,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setLocation(Location loc) {
-        //Obtener la direcci—n de la calle a partir de la latitud y la longitud
+        //Obtener la direccion de la calle a partir de la latitud y la longitud
         if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());

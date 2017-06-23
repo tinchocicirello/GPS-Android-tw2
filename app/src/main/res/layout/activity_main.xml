@@ -7,27 +7,6 @@
     tools:context="com.tallerweb2.android.GPS.MainActivity">
 
     <TextView
-        android:id="@+id/latitud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_latitud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
-
-    <TextView
-        android:id="@+id/longitud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_longitud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/latitud"
-        app:layout_constraintVertical_bias="0.102" />
-    <TextView
         android:id="@+id/direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +15,32 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/longitud"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.102"
+        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginBottom="400dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteY="361dp"
+        tools:layout_editor_absoluteX="148dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="266dp"
+        tools:layout_editor_absoluteY="361dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="361dp" />
 
 </android.support.constraint.ConstraintLayout>
