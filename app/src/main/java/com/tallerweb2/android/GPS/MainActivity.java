@@ -36,10 +36,11 @@ public class MainActivity extends AppCompatActivity
                    LocationListener, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
-//    private TextView mTvLatitud;
-//    private TextView mTvLongitud;
-    private TextView mTvDireccion;
+    private TextView tvLocalidad;
+
     private String localidad;
+    private String latitud;
+    private String longitud;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //Conectar el UI con la Actividad
-        mTvDireccion= (TextView) findViewById(R.id.direccion);
+        tvLocalidad= (TextView) findViewById(R.id.localidad);
 
         //Solicitar permisos si es necesario (Android 6.0+)
         requestPermissionIfNeedIt();
@@ -74,13 +75,15 @@ public class MainActivity extends AppCompatActivity
 
         Button boton3 = (Button)findViewById(R.id.button3);
         boton3.setOnClickListener(this);
+
+        Button boton4 = (Button)findViewById(R.id.btnMaps);
+        boton4.setOnClickListener(this);
     }
 
 
     public void onClick(View v) {
         switch (v.getId()) {
             case  R.id.button1: {
-
                 Intent i = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://clarin.com/buscador/?q="+localidad));
                 startActivity(i);
@@ -96,8 +99,14 @@ public class MainActivity extends AppCompatActivity
 
             case  R.id.button3: {
                 Intent i = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://infobae.com/search/"+localidad));
+                        Uri.parse("http://infobae.com/search/"+ localidad.replaceAll(" ", "+")));
                 startActivity(i);
+                break;
+            }
+
+            case R.id.btnMaps: {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+latitud+","+longitud+"(¡Usted está aquí!)"));
+                startActivity(intent);
                 break;
             }
         }
@@ -177,8 +186,8 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshUI(){
         if (mCurrentLocation != null) {
-//            mTvLatitud.setText(String.valueOf("Latitud: "+mCurrentLocation.getLatitude()));
-//            mTvLongitud.setText(String.valueOf("Longitud: "+mCurrentLocation.getLongitude()));
+            latitud = String.valueOf(mCurrentLocation.getLatitude());
+            longitud = String.valueOf(mCurrentLocation.getLongitude());
         }
     }
 
@@ -191,8 +200,7 @@ public class MainActivity extends AppCompatActivity
                 if (!list.isEmpty()) {
                     Address address = list.get(0);
                     localidad = address.getLocality();
-                    mTvDireccion.setText(localidad);
-
+                    tvLocalidad.setText(localidad);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -245,9 +253,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        String Text = "Mi ubicacion actual es: " + "\n Lat = "
-                + location.getLatitude() + "\n Long = " + location.getLongitude();
-        mTvDireccion.setText(Text);
+        tvLocalidad.setText("Mi ubicacion actual es: "+localidad);
         this.setLocation(location);
         refreshUI();
     }
