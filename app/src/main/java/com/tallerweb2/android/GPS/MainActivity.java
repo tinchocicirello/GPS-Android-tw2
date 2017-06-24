@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        tvLocalidad.setText("Mi ubicacion actual es: "+localidad);
+        tvLocalidad.setText(localidad);
         this.setLocation(location);
         refreshUI();
     }
