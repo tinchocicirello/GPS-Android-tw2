@@ -134,6 +134,8 @@ public class MainActivity extends AppCompatActivity
         stopLocationUpdates();
     }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -221,11 +223,9 @@ public class MainActivity extends AppCompatActivity
         Log.e(TAG, "onConnectionFailed");
     }
 
-
     /*
     * Implementación del LocationListener
-    **/
-
+    * */
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
@@ -234,10 +234,9 @@ public class MainActivity extends AppCompatActivity
         this.setLocation();
     }
 
-
     private void refreshUI(){
         if (mCurrentLocation != null) {
-            latitud = mCurrentLocation.getLongitude();
+            latitud = mCurrentLocation.getLatitude();
             longitud = mCurrentLocation.getLongitude();
         }
     }
@@ -247,7 +246,7 @@ public class MainActivity extends AppCompatActivity
         if (latitud != 0.0 && longitud != 0.0) {
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(latitud,longitud,1);
+                List<Address> list = geocoder.getFromLocation(latitud, longitud, 1);
                 if (!list.isEmpty()) {
                     Address address = list.get(0);
                     localidad = address.getLocality();
