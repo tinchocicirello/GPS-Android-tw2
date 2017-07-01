@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity
     private TextView tvLocalidad;
 
     private String localidad;
-    private String latitud;
-    private String longitud;
+    private double latitud;
+    private double longitud;
 
     private static final int RC_LOCATION_PERMISION= 100;
 
@@ -134,8 +134,6 @@ public class MainActivity extends AppCompatActivity
         stopLocationUpdates();
     }
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -184,30 +182,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void refreshUI(){
-        if (mCurrentLocation != null) {
-            latitud = String.valueOf(mCurrentLocation.getLatitude());
-            longitud = String.valueOf(mCurrentLocation.getLongitude());
-        }
-    }
-
-    public void setLocation(Location loc) {
-        //Obtener la direccion de la calle a partir de la latitud y la longitud
-        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
-            try {
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
-                if (!list.isEmpty()) {
-                    Address address = list.get(0);
-                    localidad = address.getLocality();
-                    tvLocalidad.setText(localidad);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -247,15 +221,42 @@ public class MainActivity extends AppCompatActivity
         Log.e(TAG, "onConnectionFailed");
     }
 
+
     /*
     * Implementación del LocationListener
-    * */
+    **/
+
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
         tvLocalidad.setText(localidad);
-        this.setLocation(location);
         refreshUI();
+        this.setLocation();
+    }
+
+
+    private void refreshUI(){
+        if (mCurrentLocation != null) {
+            latitud = mCurrentLocation.getLongitude();
+            longitud = mCurrentLocation.getLongitude();
+        }
+    }
+
+    public void setLocation() {
+        //Obtener la direccion de la calle a partir de la latitud y la longitud
+        if (latitud != 0.0 && longitud != 0.0) {
+            try {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> list = geocoder.getFromLocation(latitud,longitud,1);
+                if (!list.isEmpty()) {
+                    Address address = list.get(0);
+                    localidad = address.getLocality();
+                    tvLocalidad.setText(localidad);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
